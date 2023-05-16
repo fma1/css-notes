@@ -156,7 +156,7 @@ What `::before` is it inserts an invisible element before the content in the beg
 
 ```css
 p::before {
-  content: ">"
+  content: ">";
 }
 ```
 
@@ -167,7 +167,7 @@ Finally, `::after` works very similar.
 
 ```css
 p::after {
-  content: "!"
+  content: "!";
 }
 ```
 
