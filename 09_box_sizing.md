@@ -32,7 +32,7 @@
 }
 ```
 
-so we see the html and the css. pretty simple stuff. container has a `width` of `300px` and child has a `width` of `100%`.
+So we see the html and the css. Pretty simple stuff. Container has a `width` of `300px` and child has a `width` of `100%`.
 
 But when we look at the output we see the child is overflowing from the container. So what's happening here? We set the `width` to `100%` which should say `100%` of the size of the container.
 
