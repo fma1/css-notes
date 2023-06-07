@@ -9,10 +9,10 @@
   </head>
   <body>
     <section>
-      <div id="red"></div>
-      <div id="blue"></div>
+      <div id="red">Red</div>
+      <div id="blue">Blue</div>
     </section>
-    <div id="green"></div>
+    <div id="green">Green</div>
   </body>
 </html>
 ```
