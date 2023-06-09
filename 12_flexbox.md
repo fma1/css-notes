@@ -260,3 +260,131 @@ section {
 But we can change this to `wrap` and this will instead go to a new line when it runs out of space. We can also do `wrap-reverse` which works very similar to `row-reverse` in that we get the wrap effect but we will get in reverse order. So every new line we go to will happens in backwards order.
 
 Now let's go back to `flex-wrap: wrap` and you can see it's just going to a new line when it runs out of space.
+
+### `flex-flow` Property
+
+We can specify `flex-direction` and `flex-wrap` with one property and that is `flex-flow`. It's just a shorter syntax.
+
+```css
+section {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 10px;
+  height: 90vh;
+  border: 2px dotted black;
+}
+```
+
+### `align-content` Property
+
+Now that we have multiple rows, we need a way to determine how close the rows are together. We initially used align-items for this purpose but as you can see when we have a `flex-wrap`, `align-items` will only align items within their individual row.
+
+And if we change `align-items` from `center` to `flex-start`, everything gets pushed to the top of the rows, but it doesn't change how rows are aligned to each other.
+
+The way we can change this is `align-content`. It could be `center` and this will be put the rows all the way in the center. We could say `space-between`, and will add some space between them. `space-around` willadd space around them, etc.
+
+```css
+section {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-content: space-around;
+  gap: 10px;
+  height: 90vh;
+  border: 2px dotted black;
+}
+```
+
+### `order` Property
+
+Now that's pretty much everything to flex containers. Sometimes we need to change how a single flex item is aligning in the group. Maybe we want one of them to do something different from something else. And there's something we can set on the flex items themselves.
+
+And the first property we can look at is `order`. And it says where in the order do we want this to be. By default this is the order in the DOM. I could make this -1 when 0 is the default.
+
+```css
+.red {
+  order: -1;
+  height: 75px;
+  background-color: red;
+```
+
+And when I save this, all the red ones get pushed to the beginning because they have a value of -1 which is less than the value of everything else.
+
+We could set this to `1` and red is going to end up all at the end because the default value of `order` is 0 for all flex items.
+
+### `flex-grow` Property
+
+`flex-grow` says is if there's extra space, how much of it should this element take up? This defaults to 0, meaning nothing will take up extra space, which is why we saw initially everything was condensed to size of its content.
+
+When I set this to `flex-grow: 1`, when there is extra space, the red elements will take up that space.
+
+```css
+.red {
+  order: 0;
+  flex-grow: 1;
+  height: 75px;
+  background-color: red;
+```
+
+So on the first line there is no extra space for the red elements to take up so they're not changing. But on the second line there's lots of whitespace. `flex-grow` said I have `flex-grow: 1` but the others don't have any `flex-grow` so just let red take up all the space. You'll notice `flex-grow` has no unit because these are just proportions. Because if I said green was also `flex-grow: 1`, then red and green will take up equally the extra space. But if I said green was `flex-grow: 2`, then red is going to take up of the extra space that green is taking up because of that proportion of 1:2.
+
+### `flex-shrink` Property
+
+`flex-shrink` says whether or not this element is able to shrink. It defaults to 1, which says it's able to shrink. I'm going to give green a `width`.
+
+```css
+.green {
+  width: 100vw;
+  height: 125px;
+  background-color: green;
+}
+```
+
+Now you'll see green isn't taking up `100vw`. It's just taking up the size of the parent. But if we change the `flex-shrink` value to 0, we'll see it goes back to `100vw` and overflowing from the flex container.
+
+```css
+.green {
+  width: 100vw;
+  flex-shrink: 0;
+  height: 125px;
+  background-color: green;
+}
+```
+
+### `flex-basis` Property
+
+Finally, we have this property `flex-basis`. I'm going to change the `width` to `flex-basis`. It means the same thing as `width` when we have `flex-direction: row`. This is how much I want space to take up in whatever the main axis direction is.
+
+```css
+.green {
+  flex-basis: 100vw;
+  flex-shrink: 0;
+  height: 125px;
+  background-color: green;
+}
+```
+
+So if this was changed from `flex-direction: row` to `flex-direction: column`, then the green elements would get `100vw` in height. But if we go back to `row`, it's `100vw` in `width`.
+
+### `flex` Property
+
+There's a shorthand for these properties, in the order of `grow`, `shrink` and then `basis`.
+
+For example, we can say this is going to have a `flex-grow` of 1, a `flex-shrink` of 0 and a `flex-basis` of `200px`.
+
+```css
+.green {
+  flex: 1 0 200px;
+  height: 125px;
+  background-color: green;
+}
+```
+
+So now we can see these properties interacting with each other. `flex-grow` of 1 means allow the green elements to grow if there's available space. `flex-shrink` of 0 says they cannot shrink down to a smaller size than their `flex-basis` of `200px`. And since there's more there `200px` in each of our rows, this is our allowing our green element to grow beyond `200px` in each row. 
+
+However, we change the `flex-basis` to 2000px, I can grow if there's even more space even more that, and I am not allowed to shrink. Because there's no room to grow and not allowed to shrink, the green elements will show up as `2000px` and be overflowing from our flex container. But if we change `flex-shrink` to 1, it shrinks down back to the size of the flex container. But let's move it back to `200px`.
+
+That's really it. That's really all of the Flexbox properties. It's a bit of a learning curve of thinking in Flexbox and thinking of what elements need to be flex containers and which elements need to be flex items, and then which flex properties do we need to set to get elements to layout exactly how we want them to. However, it's a super intuitive way to layout pages and it's a great way to get responsive websites because things are just going to flow and flex and sizes will change based on space on screen. So everything tends to work really well.
